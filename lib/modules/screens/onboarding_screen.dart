@@ -1,4 +1,5 @@
 import 'package:balanced_meal/common/wide_button.dart';
+import 'package:balanced_meal/core/helper/navigation.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
@@ -41,7 +42,7 @@ class OnboardingScreen extends StatelessWidget {
             WideButton(
               text: Strings.orderFood,
               onPressed: () {
-                ///
+                Navigation.gotoNamed(context, route);
               },
             ),
             43.height,

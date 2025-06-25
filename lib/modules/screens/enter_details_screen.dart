@@ -1,84 +1,71 @@
-/*
-import 'package:finance_news/common/loading_stack.dart';
-import 'package:finance_news/common/plain_text_field.dart';
-import 'package:finance_news/common/show_custom_snackbar.dart';
-import 'package:finance_news/core/helper/navigation.dart';
-import 'package:finance_news/core/utils/app_colors.dart';
-import 'package:finance_news/core/utils/app_styles.dart';
-import 'package:finance_news/core/utils/extensions.dart';
-import 'package:finance_news/core/utils/utils.dart';
-import 'package:finance_news/core/utils/validators.dart';
-import 'package:finance_news/data/constants/strings.dart';
-import 'package:finance_news/modules/providers/sign_up_provider.dart';
-import 'package:finance_news/modules/screens/allow_notifications_screen.dart';
+import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class EnterDetailsScreen extends StatelessWidget {
+  const EnterDetailsScreen({super.key});
+
+  static const route = '/enter_details';
 
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
 
-    return LoadingStack(
-      loadingProvider: signUpLoadingProvider,
-      child: KeyboardDismissOnTap(
-        child: Scaffold(
-          backgroundColor: AppColor.secondary50,
-          body: SafeArea(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 24.w,
-                    right: 24.w,
-                    top: 10.h,
-                    bottom: 10.h,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    Strings.legalNameTitle,
-                    style: AppStyle.titleStyle(context),
-                  ),
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+        backgroundColor: AppColor.background,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  left: 24.w,
+                  right: 24.w,
+                  top: 10.h,
+                  bottom: 10.h,
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.w),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            //const HeightSpacer(height: 80),
-                            16.height,
-                            Text(
-                              Strings.signUpSubtitle,
-                              style: AppStyle.subtitleStyle(context),
-                            ),
-                            24.height,
-                            FirstNameBox(),
-                            33.height,
-                            LastNameBox(),
-                            138.height,
-                          ],
-                        ),
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  Strings.legalNameTitle,
+                  style: AppStyle.titleStyle(context),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          //const HeightSpacer(height: 80),
+                          16.height,
+                          Text(
+                            Strings.signUpSubtitle,
+                            style: AppStyle.subtitleStyle(context),
+                          ),
+                          24.height,
+                          FirstNameBox(),
+                          33.height,
+                          LastNameBox(),
+                          138.height,
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          floatingActionButton: NextButton(formKey: formKey),
         ),
+        floatingActionButton: NextButton(formKey: formKey),
       ),
     );
   }
@@ -188,4 +175,3 @@ class NextButton extends HookConsumerWidget {
     );
   }
 }
-*/

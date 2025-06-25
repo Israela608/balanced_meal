@@ -12,6 +12,7 @@ class AppColor {
   static const Color dark = Color(0xFF1E1E1E);
 
   static const Color background = Color(0xFFFBFBFB);
+  static Color appBarShadow = Color(0xFFDEDEDE).withOpacity(0.19);
 
   // Text
   static const Color textAsh = Color(0xFFDADADA);
