@@ -81,6 +81,12 @@ class AppStyle {
         fontWeight: FontWeight.w400,
       );
 
+  static TextStyle? fieldStyle(BuildContext context) => questrialStyle(
+        color: AppColor.textGrey,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      );
+
   static TextStyle? hintStyle(BuildContext context) =>
       bodyStyle(context)?.copyWith(color: AppColor.textAsh2);
 

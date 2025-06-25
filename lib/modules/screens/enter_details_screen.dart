@@ -1,4 +1,12 @@
+import 'package:balanced_meal/common/custom_scaffold.dart';
+import 'package:balanced_meal/common/drop_down_field.dart';
+import 'package:balanced_meal/common/plain_text_field.dart';
+import 'package:balanced_meal/common/wide_button.dart';
+import 'package:balanced_meal/core/helper/navigation.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
+import 'package:balanced_meal/core/utils/extensions.dart';
+import 'package:balanced_meal/core/utils/validators.dart';
+import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,116 +22,144 @@ class EnterDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
 
-    return KeyboardDismissOnTap(
-      child: Scaffold(
-        backgroundColor: AppColor.background,
-        body: SafeArea(
+    return CustomScaffold(
+      title: Strings.enterDetails,
+      // onBackPress: ,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Form(
+          key: formKey,
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(
-                  left: 24.w,
-                  right: 24.w,
-                  top: 10.h,
-                  bottom: 10.h,
-                ),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  Strings.legalNameTitle,
-                  style: AppStyle.titleStyle(context),
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          //const HeightSpacer(height: 80),
-                          16.height,
-                          Text(
-                            Strings.signUpSubtitle,
-                            style: AppStyle.subtitleStyle(context),
-                          ),
-                          24.height,
-                          FirstNameBox(),
-                          33.height,
-                          LastNameBox(),
-                          138.height,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              31.height,
+              GenderBox(),
+              24.height,
+              WeightBox(),
+              24.height,
+              HeightBox(),
+              24.height,
+              AgeBox(),
+              169.height,
+              NextButton(formKey: formKey),
+              60.height,
             ],
           ),
         ),
-        floatingActionButton: NextButton(formKey: formKey),
       ),
     );
   }
 }
 
-class FirstNameBox extends HookConsumerWidget {
-  const FirstNameBox({super.key});
+class GenderBox extends HookConsumerWidget {
+  const GenderBox({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final textController = useTextEditingController();
-    final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    /*final text = ref
+        .watch(patientProfileProvider.select((value) => value.profile.gender));
+*/
+    ///
+    final selectedValue = useState<String?>(null);
 
-    return PlainTextField(
-      textController: textController,
-      hintText: Strings.firstNameHint,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.next,
-      validatorCallback: Validators.validateAlpha(
-        isValidated: (value) {
-          signUpNotifier.isFirstNameValidated = value;
-        },
-        function: signUpNotifier.updateButton,
-      ),
-      onChangedCallback: (value) {
-        signUpNotifier.firstName = value;
-      },
-      onSavedCallback: (value) {
-        signUpNotifier.firstName = value ?? '';
+    ///
+    return DropDownField(
+      labelText: Strings.gender,
+      hintText: Strings.chooseGender,
+      values: Strings.genders,
+      //selectedValue: text,
+      selectedValue: selectedValue.value,
+      onSelectValue: (value) {
+        selectedValue.value = value;
+        //ref.read(patientProfileProvider.notifier).updateProfile(gender: value);
       },
     );
   }
 }
 
-class LastNameBox extends HookConsumerWidget {
-  const LastNameBox({super.key});
+class WeightBox extends HookConsumerWidget {
+  const WeightBox({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController();
-    final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
 
     return PlainTextField(
       textController: textController,
-      hintText: Strings.lastNameHint,
-      keyboardType: TextInputType.text,
+      labelText: Strings.weight,
+      hintText: Strings.chooseWeight,
+      suffixText: Strings.kg,
       textInputAction: TextInputAction.next,
-      validatorCallback: Validators.validateAlpha(
+      validatorCallback: Validators.validateDouble(
         isValidated: (value) {
-          signUpNotifier.isLastNameValidated = value;
+          //signUpNotifier.isFirstNameValidated = value;
         },
-        function: signUpNotifier.updateButton,
+        //function: signUpNotifier.updateButton,
       ),
       onChangedCallback: (value) {
-        signUpNotifier.lastName = value;
+        // signUpNotifier.firstName = value;
       },
       onSavedCallback: (value) {
-        signUpNotifier.lastName = value ?? '';
+        // signUpNotifier.firstName = value ?? '';
+      },
+    );
+  }
+}
+
+class HeightBox extends HookConsumerWidget {
+  const HeightBox({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textController = useTextEditingController();
+    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+
+    return PlainTextField(
+      textController: textController,
+      labelText: Strings.height,
+      hintText: Strings.enterHeight,
+      suffixText: Strings.cm,
+      textInputAction: TextInputAction.next,
+      validatorCallback: Validators.validateDouble(
+        isValidated: (value) {
+          //signUpNotifier.isFirstNameValidated = value;
+        },
+        //function: signUpNotifier.updateButton,
+      ),
+      onChangedCallback: (value) {
+        // signUpNotifier.firstName = value;
+      },
+      onSavedCallback: (value) {
+        // signUpNotifier.firstName = value ?? '';
+      },
+    );
+  }
+}
+
+class AgeBox extends HookConsumerWidget {
+  const AgeBox({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final textController = useTextEditingController();
+    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+
+    return PlainTextField(
+      textController: textController,
+      labelText: Strings.age,
+      hintText: Strings.enterAge,
+      textInputAction: TextInputAction.done,
+      validatorCallback: Validators.validateInt(
+        isValidated: (value) {
+          //signUpNotifier.isFirstNameValidated = value;
+        },
+        //function: signUpNotifier.updateButton,
+      ),
+      onChangedCallback: (value) {
+        // signUpNotifier.firstName = value;
+      },
+      onSavedCallback: (value) {
+        // signUpNotifier.firstName = value ?? '';
       },
     );
   }
@@ -136,11 +172,18 @@ class NextButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isCompleted = ref.watch(signUpNotifierProvider).isCompleted;
+    // bool isCompleted = ref.watch(signUpNotifierProvider).isCompleted;
 
-    return FloatingActionButton(
+    return WideButton(
+      text: Strings.next,
+      //isEnabled: ,
       onPressed: () async {
-        if (formKey.currentState!.validate()) {
+        Navigation.gotoNamed(
+          context,
+          EnterDetailsScreen.route,
+        );
+
+        /* if (formKey.currentState!.validate()) {
           final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
           await signUpNotifier.signUp();
 
@@ -160,18 +203,8 @@ class NextButton extends HookConsumerWidget {
                   : Strings.signUpErrorMessage,
             );
           }
-        }
+        }*/
       },
-      shape: CircleBorder(),
-      backgroundColor: isCompleted
-          ? AppColor.primary600
-          : AppColor.primary600.withOpacity(0.4),
-      child: getSvg(
-        svg: 'chevron-right',
-        height: 24,
-        width: 24,
-        fit: BoxFit.scaleDown,
-      ),
     );
   }
 }

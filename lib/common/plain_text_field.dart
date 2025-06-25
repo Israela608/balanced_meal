@@ -1,64 +1,96 @@
-/*
-import 'package:finance_news/core/utils/app_colors.dart';
-import 'package:finance_news/core/utils/app_styles.dart';
+import 'package:balanced_meal/core/utils/app_colors.dart';
+import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PlainTextField extends StatelessWidget {
   const PlainTextField({
     super.key,
     required this.textController,
+    this.labelText = '',
     required this.hintText,
-    this.keyboardType = TextInputType.text,
+    this.suffixText,
     required this.textInputAction,
-    this.maxLines,
+    this.inputFormatters,
     this.validatorCallback,
     this.onChangedCallback,
     this.onSavedCallback,
   });
 
   final TextEditingController textController;
+  final String labelText;
   final String hintText;
-  final TextInputType keyboardType;
+  final String? suffixText;
   final TextInputAction textInputAction;
-  final int? maxLines;
+  final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validatorCallback;
   final Function(String)? onChangedCallback;
   final Function(String?)? onSavedCallback;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textController,
-      validator: validatorCallback,
-      onChanged: (text) {
-        if (onChangedCallback != null) {
-          onChangedCallback!(text);
-        }
-      },
-      onSaved: onSavedCallback,
-      keyboardType: keyboardType,
-      textInputAction: textInputAction,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      maxLines: maxLines,
-      style: AppStyle.bodyStyle(context)?.copyWith(decorationThickness: 0),
-      cursorColor: AppColor.muted300,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: AppStyle.hintStyle(context),
-        contentPadding: EdgeInsets.symmetric(
-          vertical: 8.h,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (labelText.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(bottom: 10.h),
+            child: Text(
+              labelText,
+              style: AppStyle.subtitleStyle(context),
+            ),
+          ),
+        TextFormField(
+          controller: textController,
+          validator: validatorCallback,
+          onChanged: (text) {
+            if (onChangedCallback != null) {
+              onChangedCallback!(text);
+            }
+          },
+          onSaved: onSavedCallback,
+          keyboardType: TextInputType.phone,
+          textInputAction: textInputAction,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          inputFormatters: inputFormatters,
+          maxLines: 1,
+          style: AppStyle.fieldStyle(context),
+          cursorColor: AppColor.ash,
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: AppStyle.hintStyle(context),
+            suffixText: suffixText,
+            suffixStyle: AppStyle.subtitleStyle(context),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 14.h,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                width: 1.h,
+                color: AppColor.borderAsh,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                width: 1.h,
+                color: AppColor.borderAsh,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(
+                width: 1.h,
+                color: AppColor.borderAsh,
+              ),
+            ),
+            isDense: true,
+          ),
         ),
-        enabledBorder: UnderlineInputBorder(
-          borderSide:
-              BorderSide(color: AppColor.muted300), // Line when not focused
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColor.muted300), // Line when focused
-        ),
-        isDense: true,
-      ),
+      ],
     );
   }
 }
-*/

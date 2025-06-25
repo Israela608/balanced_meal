@@ -27,7 +27,7 @@ class CustomScaffold extends StatelessWidget {
             children: [
               CustomAppBar(
                 title: title,
-                onBackPress: onBackPress,
+                onBackPress: onBackPress ?? () => Navigator.pop(context),
               ),
               Expanded(
                 child: SizedBox(
