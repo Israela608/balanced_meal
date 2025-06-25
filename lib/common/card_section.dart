@@ -41,10 +41,11 @@ class FoodCardSection extends StatelessWidget {
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return FoodCard(
-                    item: items[index],
-                    onPress: () {
-                      onItemPress(items[index]);
-                    });
+                  item: items[index],
+                  onPress: () {
+                    onItemPress(items[index]);
+                  },
+                );
               },
             ),
             12.width,
@@ -76,10 +77,6 @@ class FoodCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColor.white,
         borderRadius: BorderRadius.circular(12.r),
-        image: DecorationImage(
-          image: NetworkImage(item.imageUrl ?? ''),
-          fit: BoxFit.cover,
-        ),
         boxShadow: [
           BoxShadow(
             offset: Offset(3.w, 4.h),
@@ -96,6 +93,10 @@ class FoodCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColor.white,
               borderRadius: BorderRadius.circular(6.r),
+              image: DecorationImage(
+                image: NetworkImage(item.imageUrl ?? ''),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           10.height,

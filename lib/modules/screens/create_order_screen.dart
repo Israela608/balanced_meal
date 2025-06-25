@@ -20,17 +20,19 @@ class CreateOrderScreen extends StatelessWidget {
       title: Strings.createOrder,
       child: Column(
         children: [
-          30.height,
-          Column(
-            children: [
-              VegetablesBox(),
-              24.height,
-              MeatBox(),
-              24.height,
-              CarbBox(),
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                30.height,
+                VegetablesBox(),
+                24.height,
+                MeatBox(),
+                24.height,
+                CarbsBox(),
+                29.height,
+              ],
+            ),
           ),
-          29.height,
           FooterBox(),
         ],
       ),
