@@ -23,6 +23,8 @@ class Strings {
   static const String next = 'Next';
 
   // Create Order
+  static const String createOrder = 'Create your order';
+  static const String add = 'Add';
   static const String vegetables = 'Vegetables';
   static const String meat = 'Meats';
   static const String carbs = 'Carbs';

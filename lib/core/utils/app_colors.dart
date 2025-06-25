@@ -13,6 +13,7 @@ class AppColor {
 
   static const Color background = Color(0xFFFBFBFB);
   static Color appBarShadow = Color(0xFFDEDEDE).withOpacity(0.19);
+  static Color cardShadow = Color(0xFF898989).withOpacity(0.24);
 
   // Text
   static const Color textAsh = Color(0xFFDADADA);
