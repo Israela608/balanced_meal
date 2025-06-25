@@ -29,6 +29,19 @@ class OnboardingScreen extends StatelessWidget {
               fit: BoxFit.fitHeight,
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Colors.black.withValues(alpha: 0.7), // Fully opaque black
+                  Colors.black
+                      .withValues(alpha: 0.0), // Fully transparent black
+                ],
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
