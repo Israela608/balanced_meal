@@ -26,24 +26,26 @@ class EnterDetailsScreen extends StatelessWidget {
     return CustomScaffold(
       title: Strings.enterDetails,
       // onBackPress: ,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              31.height,
-              GenderBox(),
-              24.height,
-              WeightBox(),
-              24.height,
-              HeightBox(),
-              24.height,
-              AgeBox(),
-              169.height,
-              NextButton(formKey: formKey),
-              60.height,
-            ],
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                31.height,
+                GenderBox(),
+                24.height,
+                WeightBox(),
+                24.height,
+                HeightBox(),
+                24.height,
+                AgeBox(),
+                169.height,
+                NextButton(formKey: formKey),
+                //60.height,
+              ],
+            ),
           ),
         ),
       ),

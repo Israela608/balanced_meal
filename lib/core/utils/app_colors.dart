@@ -14,6 +14,8 @@ class AppColor {
   static const Color background = Color(0xFFFBFBFB);
   static Color appBarShadow = Color(0xFFDEDEDE).withValues(alpha: 0.19);
   static Color cardShadow = Color(0xFF898989).withValues(alpha: 0.24);
+  static Color dropdownShadow = Color(0xFF101828).withValues(alpha: 0.03);
+  static Color dropdownShadow2 = Color(0xFF101828).withValues(alpha: 0.08);
 
   // Text
   static const Color textAsh = Color(0xFFDADADA);

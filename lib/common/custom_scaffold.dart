@@ -22,21 +22,19 @@ class CustomScaffold extends StatelessWidget {
     return KeyboardDismissOnTap(
       child: Scaffold(
         backgroundColor: AppColor.background,
-        body: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                title: title,
-                onBackPress: onBackPress ?? () => Navigator.pop(context),
+        body: Column(
+          children: [
+            CustomAppBar(
+              title: title,
+              onBackPress: onBackPress ?? () => Navigator.pop(context),
+            ),
+            Expanded(
+              child: SizedBox(
+                width: double.maxFinite,
+                child: child,
               ),
-              Expanded(
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: child,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

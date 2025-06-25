@@ -81,7 +81,7 @@ class AppStyle {
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle? fieldStyle(BuildContext context) => questrialStyle(
+  static TextStyle? fieldStyle(BuildContext context) => poppinsStyle(
         color: AppColor.textGrey,
         fontSize: 16,
         fontWeight: FontWeight.w500,
