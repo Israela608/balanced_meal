@@ -36,7 +36,21 @@ class OrderList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Order> orders = [
-      ///
+      Order(
+        name: 'Bell Pepper',
+        totalPrice: 12,
+        quantity: 2,
+      ),
+      Order(
+        name: 'Lean Beef',
+        totalPrice: 19,
+        quantity: 1,
+      ),
+      Order(
+        name: 'Sweet Corn',
+        totalPrice: 25,
+        quantity: 9,
+      ),
     ];
 
     return ListView.builder(
@@ -98,7 +112,9 @@ class OrderTile extends StatelessWidget {
               color: AppColor.white,
               borderRadius: BorderRadius.circular(6.r),
               image: DecorationImage(
-                image: NetworkImage(order.imageUrl ?? ''),
+                //image: NetworkImage(order.imageUrl ?? ''),
+                image: NetworkImage(
+                    "https://m.media-amazon.com/images/I/41F62-VbHSL._AC_UF1000,1000_QL80_.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -208,8 +224,8 @@ class FooterBox extends StatelessWidget {
         children: [
           16.height,
           CaloriesPriceBox(
-            calories: calories,
-            price: price,
+            calories: '1198',
+            price: '125',
           ),
           10.height,
           WideButton(

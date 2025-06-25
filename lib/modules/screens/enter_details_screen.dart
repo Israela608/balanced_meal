@@ -7,6 +7,7 @@ import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/core/utils/validators.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/modules/screens/create_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -180,7 +181,7 @@ class NextButton extends HookConsumerWidget {
       onPressed: () async {
         Navigation.gotoNamed(
           context,
-          EnterDetailsScreen.route,
+          CreateOrderScreen.route,
         );
 
         /* if (formKey.currentState!.validate()) {

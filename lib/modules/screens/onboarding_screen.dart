@@ -69,10 +69,10 @@ class OnboardingScreen extends StatelessWidget {
                 WideButton(
                   text: Strings.orderFood,
                   onPressed: () {
-                    /* Navigation.gotoNamed(
+                    Navigation.gotoNamed(
                       context,
                       EnterDetailsScreen.route,
-                    );*/
+                    );
                   },
                 ),
                 43.height,
