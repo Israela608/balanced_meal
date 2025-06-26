@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Item extends Equatable {
-  final int? id;
+  final String? id;
   final String? foodName;
   final int? calories;
   final String? imageUrl;
@@ -24,6 +25,14 @@ class Item extends Equatable {
       price: json['price'],
     );
   }
+
+  //If it's coming from firebase, use fromSnapshot()
+  Item.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : id = snapshot.id,
+        foodName = snapshot['food_name'],
+        calories = snapshot['calories'],
+        imageUrl = snapshot['image_url'],
+        price = snapshot['price'];
 
   Map<String, dynamic> toJson() {
     return {
