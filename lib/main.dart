@@ -52,8 +52,8 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           //home: child!,
-          initialRoute: CreateOrderScreen.route,
-          //initialRoute: OnboardingScreen.route,
+          //initialRoute: CreateOrderScreen.route,
+          initialRoute: OnboardingScreen.route,
           routes: AppRoutes.routes(context),
         );
       },

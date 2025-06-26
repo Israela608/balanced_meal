@@ -5,6 +5,8 @@ import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/core/utils/utils.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/modules/providers/food_provider.dart';
+import 'package:balanced_meal/modules/providers/food_uploader_provider.dart';
 import 'package:balanced_meal/modules/screens/enter_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,7 +20,24 @@ class OnboardingScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect() {}
+    initData() async {
+      await ref.read(foodUploaderProvider.notifier).uploadData(context);
+
+      final isSuccess =
+          ref.read(foodUploaderProvider.select((value) => value.isSuccess));
+
+      if (isSuccess) {
+        await ref.read(foodProvider.notifier).getAllFoods();
+      }
+    }
+
+    useEffect(() {
+      Future.microtask(() {
+        return initData();
+      });
+
+      return null;
+    }, []);
 
     return Scaffold(
       body: Stack(
