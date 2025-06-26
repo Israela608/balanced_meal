@@ -3,9 +3,12 @@ import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/models/item.dart';
+import 'package:balanced_meal/data/models/order.dart';
+import 'package:balanced_meal/modules/providers/order_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 double _cardHeight = 197.h;
 double _cardWidth = 183.h;
@@ -51,16 +54,29 @@ class FoodCardSection extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: items.length,
                   itemBuilder: (context, index) {
-                    return FoodCard(
-                      item: items[index],
-                      quantity: ,
-                      onAddPress: () {
-                        onItemAddPress(items[index]);
-                      },
-                      onRemovePress: () {
-                        onItemAddPress(items[index]);
-                      },
-                    );
+                    return Consumer(builder: (context, ref, child) {
+                      List<Order> orders = ref.watch(
+                          orderProvider.select((value) => value.orderItems));
+                      int quantity = 0;
+
+                      for (Order order in orders) {
+                        if (order.name == items[index].foodName) {
+                          quantity = order.quantity ?? 0;
+                          break;
+                        }
+                      }
+
+                      return FoodCard(
+                        item: items[index],
+                        quantity: quantity,
+                        onAddPress: () {
+                          onItemAddPress(items[index]);
+                        },
+                        onRemovePress: () {
+                          onItemAddPress(items[index]);
+                        },
+                      );
+                    });
                   },
                 ),
                 12.width,
@@ -156,63 +172,7 @@ class FoodCard extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  /////////////////////////
-                  GestureDetector(
-                    onTap: onAddPress,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5.h,
-                        horizontal: 16.w,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        color: AppColor.primary,
-                      ),
-                      child: Text(
-                        Strings.add,
-                        style: poppinsStyle(
-                          color: AppColor.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
-                  //////////////////////////
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '\$12 ${Strings.cal}',
-                          style: poppinsStyle(
-                            color: AppColor.textAsh,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      circleButton(
-                        text: '-',
-                        onPress: onRemovePress,
-                      ),
-                      SizedBox(
-                        width: 32.w,
-                        child: Text(
-                          order.quantity.toString(),
-                          style: poppinsStyle(
-                            color: AppColor.textDark,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                      circleButton(
-                        text: '+',
-                        onPress: onAddPress,
-                      ),
-                    ],
-                  ),
+                  displayButton(),
                 ],
               ),
             ],
@@ -220,6 +180,56 @@ class FoodCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget displayButton() {
+    if (quantity > 0) {
+      return Row(
+        children: [
+          circleButton(
+            text: '-',
+            onPress: onRemovePress,
+          ),
+          SizedBox(
+            width: 32.w,
+            child: Text(
+              quantity.toString(),
+              style: poppinsStyle(
+                color: AppColor.textDark,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          circleButton(
+            text: '+',
+            onPress: onAddPress,
+          ),
+        ],
+      );
+    } else {
+      return GestureDetector(
+        onTap: onAddPress,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 5.h,
+            horizontal: 16.w,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.r),
+            color: AppColor.primary,
+          ),
+          child: Text(
+            Strings.add,
+            style: poppinsStyle(
+              color: AppColor.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   Widget circleButton({
