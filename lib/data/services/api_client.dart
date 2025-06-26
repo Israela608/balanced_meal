@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:balanced_meal/data/constants/api_constants.dart';
+import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/data/models/app_exceptions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 
-/*
 final apiClientProvider = Provider<ApiClient>((ref) {
   return ApiClient();
 });
@@ -46,6 +48,34 @@ class ApiClient {
     return responseJson;
   }
 
+  Future<dynamic> postData(
+    String uri, {
+    dynamic body,
+    bool useToken = true,
+    Duration? timeoutDuration,
+  }) async {
+    debugPrint('POST URL: $baseUrl$uri');
+    debugPrint('POST BODY: $body');
+    var responseJson;
+
+    try {
+      final response = await http
+          .post(
+            Uri.parse(baseUrl + uri),
+            body: jsonEncode(body),
+            headers: await requestHeaders(useToken: useToken),
+          )
+          .timeout(timeoutDuration ?? this.timeoutDuration);
+      debugPrint('POST API RESPONSE: ${response.body}');
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException {
+      throw FetchDataException('Request timed out');
+    }
+    return responseJson;
+  }
+
   dynamic _returnResponse(http.Response response) {
     log('STATUS CODE => ${response.statusCode}');
     if (response.statusCode >= 200 && response.statusCode < 300) {
@@ -75,4 +105,3 @@ class ApiClient {
     }
   }
 }
-*/

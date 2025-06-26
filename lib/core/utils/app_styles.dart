@@ -75,7 +75,7 @@ class AppStyle {
   static TextStyle? subtitleStyle(BuildContext context) =>
       titleStyle(context)?.copyWith(fontSize: 14.sp);
 
-  static TextStyle? bodyStyle(BuildContext context) => questrialStyle(
+  static TextStyle? bodyStyle(BuildContext context) => poppinsStyle(
         color: AppColor.textGrey,
         fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -87,6 +87,9 @@ class AppStyle {
         fontWeight: FontWeight.w500,
       );
 
-  static TextStyle? hintStyle(BuildContext context) =>
-      bodyStyle(context)?.copyWith(color: AppColor.textAsh2);
+  static TextStyle? hintStyle(BuildContext context) => questrialStyle(
+        color: AppColor.textAsh2,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      );
 }

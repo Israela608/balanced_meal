@@ -1,7 +1,9 @@
 import 'package:balanced_meal/core/helper/app_routes.dart';
 import 'package:balanced_meal/core/utils/constants.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/modules/screens/create_order_screen.dart';
 import 'package:balanced_meal/modules/screens/onboarding_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,11 +12,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'data/repos/user_repo.dart';
 
-void main() {
+Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.transparent,
   ));
+
+  WidgetsFlutterBinding.ensureInitialized();
+  //Connect app with firebase
+/*  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );*/
 
   runApp(
     ProviderScope(
@@ -43,7 +51,8 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           //home: child!,
-          initialRoute: OnboardingScreen.route,
+          initialRoute: CreateOrderScreen.route,
+          //initialRoute: OnboardingScreen.route,
           routes: AppRoutes.routes(context),
         );
       },

@@ -1,3 +1,4 @@
+import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/models/response.dart';
 import 'package:equatable/equatable.dart';
 
@@ -25,6 +26,10 @@ class InfoState extends Equatable {
     this.height = 0.0,
     this.age = 0,
   });
+
+  double get calories => gender == Strings.genders[1]
+      ? (655.1 + (9.56 * weight) + (1.85 * height) - (4.67 * age)) // Female
+      : (666.47 + (13.75 * weight) + (5 * height) - (6.75 * age)); // Male
 
   InfoState copyWith({
     Response? response,

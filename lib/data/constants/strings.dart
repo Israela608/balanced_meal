@@ -60,6 +60,12 @@ class Strings {
   static const String communicationError =
       'Error occurred while communicating with the server';
 
+  static const String sendingOrder =
+      'Sending Orders...';
+  static const String ordersSent =
+      'Orders Sent!';
+
+
   static const List<String> genders = [
     'Male',
     'Female',

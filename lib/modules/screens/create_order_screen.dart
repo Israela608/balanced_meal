@@ -22,17 +22,19 @@ class CreateOrderScreen extends StatelessWidget {
       title: Strings.createOrder,
       child: Column(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                30.height,
-                VegetablesBox(),
-                24.height,
-                MeatBox(),
-                24.height,
-                CarbsBox(),
-                29.height,
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  30.height,
+                  VegetablesBox(),
+                  24.height,
+                  MeatBox(),
+                  24.height,
+                  CarbsBox(),
+                  29.height,
+                ],
+              ),
             ),
           ),
           FooterBox(),
@@ -77,7 +79,7 @@ class VegetablesBox extends StatelessWidget {
     return FoodCardSection(
       title: Strings.vegetables,
       items: items,
-      onItemPress: (Item newItem) {
+      onItemAddPress: (Item newItem) {
         ///
       },
     );
@@ -119,7 +121,7 @@ class MeatBox extends StatelessWidget {
     return FoodCardSection(
       title: Strings.meat,
       items: items,
-      onItemPress: (Item newItem) {
+      onItemAddPress: (Item newItem) {
         ///
       },
     );
@@ -160,7 +162,7 @@ class CarbsBox extends StatelessWidget {
     return FoodCardSection(
       title: Strings.carbs,
       items: items,
-      onItemPress: (Item newItem) {
+      onItemAddPress: (Item newItem) {
         ///
       },
     );
