@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+import 'dart:developer';
 
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/firebase_ref/references.dart';

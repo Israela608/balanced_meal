@@ -1,6 +1,7 @@
 import 'package:balanced_meal/core/helper/app_routes.dart';
 import 'package:balanced_meal/core/utils/constants.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/firebase_options.dart';
 import 'package:balanced_meal/modules/screens/create_order_screen.dart';
 import 'package:balanced_meal/modules/screens/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,9 +21,9 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   //Connect app with firebase
-/*  await Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );*/
+  );
 
   runApp(
     ProviderScope(

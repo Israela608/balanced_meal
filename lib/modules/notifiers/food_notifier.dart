@@ -1,13 +1,8 @@
-import 'dart:convert';
-import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
-
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/firebase_ref/references.dart';
 import 'package:balanced_meal/data/models/food_category.dart';
 import 'package:balanced_meal/data/models/response.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class FoodNotifier extends StateNotifier<Response<List<FoodCategory>>> {
