@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Order extends Equatable {
   final String? name;
-  final int? totalPrice;
+  final double? totalPrice;
   final int? quantity;
 
   const Order({
@@ -10,6 +10,18 @@ class Order extends Equatable {
     this.totalPrice,
     this.quantity,
   });
+
+  Order copyWith({
+    String? name,
+    double? totalPrice,
+    int? quantity,
+  }) {
+    return Order(
+      name: name ?? this.name,
+      totalPrice: totalPrice ?? this.totalPrice,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(

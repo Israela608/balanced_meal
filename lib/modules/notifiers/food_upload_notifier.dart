@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
 
+import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/firebase_ref/references.dart';
 import 'package:balanced_meal/data/models/food_category.dart';
 import 'package:balanced_meal/data/models/response.dart';
@@ -9,13 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class DataUploaderNotifier extends StateNotifier<Response> {
-  DataUploaderNotifier() : super(Response.initial()) {
-    //uploadData();
-  }
+class FoodUploadNotifier extends StateNotifier<Response<dynamic>> {
+  FoodUploadNotifier() : super(Response.initial());
 
   Future<void> uploadData(BuildContext context) async {
-    state = Response.loading('');
+    state = Response.loading(Strings.uploading);
 
     //Get a firebase firestore instance
     final fireStore = FirebaseFirestore.instance;
@@ -89,6 +88,6 @@ class DataUploaderNotifier extends StateNotifier<Response> {
       await batch.commit();
     }
 
-    state = state = Response.success('');
+    state = state = Response.success(Strings.uploaded);
   }
 }
