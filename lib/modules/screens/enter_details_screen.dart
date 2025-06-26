@@ -7,12 +7,13 @@ import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/core/utils/validators.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
+import 'package:balanced_meal/modules/providers/info_provider.dart';
 import 'package:balanced_meal/modules/screens/create_order_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class EnterDetailsScreen extends StatelessWidget {
   const EnterDetailsScreen({super.key});
@@ -58,22 +59,18 @@ class GenderBox extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /*final text = ref
-        .watch(patientProfileProvider.select((value) => value.profile.gender));
-*/
-    ///
-    final selectedValue = useState<String?>(null);
+    final text =
+        ref.watch(infoNotifierProvider.select((value) => value.gender));
 
-    ///
     return DropDownField(
       labelText: Strings.gender,
       hintText: Strings.chooseGender,
       values: Strings.genders,
-      //selectedValue: text,
-      selectedValue: selectedValue.value,
+      selectedValue: text,
       onSelectValue: (value) {
-        selectedValue.value = value;
-        //ref.read(patientProfileProvider.notifier).updateProfile(gender: value);
+        if (value != null && value.isNotEmpty) {
+          ref.read(infoNotifierProvider.notifier).gender = value;
+        }
       },
     );
   }
@@ -85,7 +82,7 @@ class WeightBox extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController();
-    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    final infoNotifier = ref.read(infoNotifierProvider.notifier);
 
     return PlainTextField(
       textController: textController,
@@ -93,17 +90,17 @@ class WeightBox extends HookConsumerWidget {
       hintText: Strings.chooseWeight,
       suffixText: Strings.kg,
       textInputAction: TextInputAction.next,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(5),
+      ],
       validatorCallback: Validators.validateDouble(
         isValidated: (value) {
-          //signUpNotifier.isFirstNameValidated = value;
+          infoNotifier.isWeightValidated = value;
         },
-        //function: signUpNotifier.updateButton,
+        function: infoNotifier.updateButton,
       ),
-      onChangedCallback: (value) {
-        // signUpNotifier.firstName = value;
-      },
       onSavedCallback: (value) {
-        // signUpNotifier.firstName = value ?? '';
+        infoNotifier.weight = value ?? '';
       },
     );
   }
@@ -115,7 +112,7 @@ class HeightBox extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController();
-    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    final infoNotifier = ref.read(infoNotifierProvider.notifier);
 
     return PlainTextField(
       textController: textController,
@@ -123,17 +120,17 @@ class HeightBox extends HookConsumerWidget {
       hintText: Strings.enterHeight,
       suffixText: Strings.cm,
       textInputAction: TextInputAction.next,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(5),
+      ],
       validatorCallback: Validators.validateDouble(
         isValidated: (value) {
-          //signUpNotifier.isFirstNameValidated = value;
+          infoNotifier.isHeightValidated = value;
         },
-        //function: signUpNotifier.updateButton,
+        function: infoNotifier.updateButton,
       ),
-      onChangedCallback: (value) {
-        // signUpNotifier.firstName = value;
-      },
       onSavedCallback: (value) {
-        // signUpNotifier.firstName = value ?? '';
+        infoNotifier.height = value ?? '';
       },
     );
   }
@@ -145,24 +142,25 @@ class AgeBox extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = useTextEditingController();
-    // final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
+    final infoNotifier = ref.read(infoNotifierProvider.notifier);
 
     return PlainTextField(
       textController: textController,
       labelText: Strings.age,
       hintText: Strings.enterAge,
       textInputAction: TextInputAction.done,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly, // Allows only digits
+        LengthLimitingTextInputFormatter(3),
+      ],
       validatorCallback: Validators.validateInt(
         isValidated: (value) {
-          //signUpNotifier.isFirstNameValidated = value;
+          infoNotifier.isAgeValidated = value;
         },
-        //function: signUpNotifier.updateButton,
+        function: infoNotifier.updateButton,
       ),
-      onChangedCallback: (value) {
-        // signUpNotifier.firstName = value;
-      },
       onSavedCallback: (value) {
-        // signUpNotifier.firstName = value ?? '';
+        infoNotifier.age = value ?? '';
       },
     );
   }
@@ -175,38 +173,17 @@ class NextButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // bool isCompleted = ref.watch(signUpNotifierProvider).isCompleted;
+    bool isCompleted = ref.watch(infoNotifierProvider).isCompleted;
 
     return WideButton(
       text: Strings.next,
-      //isEnabled: ,
+      isEnabled: isCompleted,
       onPressed: () async {
+        formKey.currentState?.save();
         Navigation.gotoNamed(
           context,
           CreateOrderScreen.route,
         );
-
-        /* if (formKey.currentState!.validate()) {
-          final signUpNotifier = ref.read(signUpNotifierProvider.notifier);
-          await signUpNotifier.signUp();
-
-          final response = ref.read(signUpNotifierProvider).response;
-
-          if (response.isSuccess) {
-            return Navigation.gotoWidget(
-              context,
-              replacePreviousScreen: true,
-              AllowNotificationsScreen(),
-            );
-          } else {
-            showCustomSnackBar(
-              context,
-              message: response.message.isNotEmpty
-                  ? response.message
-                  : Strings.signUpErrorMessage,
-            );
-          }
-        }*/
       },
     );
   }

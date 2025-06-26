@@ -37,17 +37,13 @@ class WideButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Center(
-          child: Text(
-            text,
-            textScaler: isNoTextScale ? TextScaler.noScaling : null,
-            style: isEnabled
-                ? poppinsStyle(
-                    color: textColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  )
-                : AppStyle.buttonTextStyle(context),
-          ),
+          child: Text(text,
+              textScaler: isNoTextScale ? TextScaler.noScaling : null,
+              style: poppinsStyle(
+                color: isEnabled ? textColor : AppColor.textAsh2,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              )),
         ),
       ),
     );

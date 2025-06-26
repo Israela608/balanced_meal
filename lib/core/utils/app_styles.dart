@@ -89,7 +89,4 @@ class AppStyle {
 
   static TextStyle? hintStyle(BuildContext context) =>
       bodyStyle(context)?.copyWith(color: AppColor.textAsh2);
-
-  static TextStyle? buttonTextStyle(BuildContext context) =>
-      hintStyle(context)?.copyWith(fontWeight: FontWeight.w500);
 }
