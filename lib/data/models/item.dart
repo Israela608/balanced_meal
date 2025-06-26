@@ -13,7 +13,7 @@ class Item extends Equatable {
     this.foodName,
     this.calories,
     this.imageUrl,
-    this.price,
+    this.price = 12,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,8 @@ class Item extends Equatable {
       foodName: json['food_name'],
       calories: json['calories'],
       imageUrl: json['image_url'],
-      price: json['price'],
+      //price: json['price'],
+      price: 12,
     );
   }
 

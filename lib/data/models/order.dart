@@ -4,22 +4,26 @@ class Order extends Equatable {
   final String? name;
   final double? totalPrice;
   final int? quantity;
+  final int? calories;
 
   const Order({
     this.name,
     this.totalPrice,
     this.quantity,
+    this.calories,
   });
 
   Order copyWith({
     String? name,
     double? totalPrice,
     int? quantity,
+    int? calories,
   }) {
     return Order(
       name: name ?? this.name,
       totalPrice: totalPrice ?? this.totalPrice,
       quantity: quantity ?? this.quantity,
+      calories: calories ?? this.calories,
     );
   }
 
@@ -37,13 +41,6 @@ class Order extends Equatable {
       'total_price': totalPrice,
       'quantity': quantity,
     };
-  }
-
-  static List<Order> fromListJson(List<dynamic>? jsonList) {
-    if (jsonList == null) {
-      return [];
-    }
-    return jsonList.map((json) => Order.fromJson(json)).toList();
   }
 
   @override

@@ -4,9 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class InfoNotifier extends StateNotifier<InfoState> {
   InfoNotifier() : super(InfoState());
 
-  void initialize() {
-    state = InfoState();
-  }
+  void initialize() => state = InfoState();
 
   set isWeightValidated(bool isValidated) =>
       state = state.copyWith(isWeightValidated: isValidated);

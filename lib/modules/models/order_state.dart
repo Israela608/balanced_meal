@@ -19,6 +19,16 @@ class OrderState extends Equatable {
     this.orderItems = const [],
   });
 
+  double get totalCalories {
+    if (orderItems.isEmpty) {
+      return 0.0;
+    }
+    return orderItems.fold(0.0, (sum, item) {
+      final calories = item.calories ?? 0.0;
+      return sum + calories;
+    });
+  }
+
   double get totalPriceOfAllOrders {
     if (orderItems.isEmpty) {
       return 0.0;
@@ -27,6 +37,17 @@ class OrderState extends Equatable {
       final price = item.totalPrice ?? 0.0;
       return sum + price;
     });
+  }
+
+  bool isCaloriesWithinRange(double userCalories) {
+    if (userCalories <= 0) {
+      return totalCalories ==
+          userCalories; // Only true if both are zero or negative and equal
+    }
+    final double lowerBound = userCalories * 0.90; // 10% under userCalories
+    final double upperBound = userCalories * 1.10; // 10% over userCalories
+
+    return totalCalories >= lowerBound && totalCalories <= upperBound;
   }
 
   OrderState copyWith({

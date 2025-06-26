@@ -31,7 +31,7 @@ class Strings {
   static const String cal = 'Cal';
   static const String cals = 'Cals';
   static const String price = 'Price';
-  static const String calOutOf = 'Cal out of 1200 Cal';
+  static const String calOutOf = 'Cal out of';
   static const String placeOrder = 'Place order';
 
   // Order Summary
@@ -70,9 +70,4 @@ class Strings {
     'Male',
     'Female',
   ];
-  /*static const List<String> months = [
-    '', // index 0 unused
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];*/
 }

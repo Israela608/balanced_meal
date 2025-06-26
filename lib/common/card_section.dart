@@ -39,7 +39,7 @@ class FoodCardSection extends StatelessWidget {
             style: AppStyle.titleStyle(context),
           ),
         ),
-        15.height,
+        // 15.height,
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: BouncingScrollPhysics(),
@@ -73,7 +73,7 @@ class FoodCardSection extends StatelessWidget {
                           onItemAddPress(items[index]);
                         },
                         onRemovePress: () {
-                          onItemAddPress(items[index]);
+                          onItemRemovePress(items[index]);
                         },
                       );
                     });
@@ -105,32 +105,35 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Container(
-        height: _cardHeight,
-        width: _cardWidth,
-        padding: EdgeInsets.symmetric(
-          horizontal: 10.w,
-          vertical: 8.h,
-        ),
-        margin: EdgeInsets.only(right: 12.w),
-        decoration: BoxDecoration(
-          color: AppColor.white,
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(3.w, 4.h),
-              blurRadius: 15.5.r,
-              color: AppColor.cardShadow,
-            ),
-          ],
-        ),
-        child: MediaQuery(
-          data:
-              MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-          child: Column(
-            children: [
-              SizedBox(
+    return Container(
+      height: _cardHeight,
+      width: _cardWidth,
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.w,
+        vertical: 8.h,
+      ),
+      margin: EdgeInsets.only(
+        right: 12.w,
+        top: 15.h,
+        bottom: 20.h,
+      ),
+      decoration: BoxDecoration(
+        color: AppColor.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(3.w, 4.h),
+            blurRadius: 15.5.r,
+            color: AppColor.cardShadow,
+          ),
+        ],
+      ),
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+        child: Column(
+          children: [
+            Flexible(
+              child: SizedBox(
                   width: 163.w,
                   height: 108.h,
                   child: ClipRRect(
@@ -141,42 +144,42 @@ class FoodCard extends StatelessWidget {
                       //errorWidget: CircularProgressIndicator(),
                     ),
                   )),
-              10.height,
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      item.foodName ?? '',
-                      style: AppStyle.bodyStyle(context)
-                          ?.copyWith(color: AppColor.textDark),
-                    ),
+            ),
+            10.height,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    item.foodName ?? '',
+                    style: AppStyle.bodyStyle(context)
+                        ?.copyWith(color: AppColor.textDark),
                   ),
-                  Text(
-                    '${item.calories} ${Strings.cal}',
-                    style: poppinsStyle(
-                      color: AppColor.textAsh,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                ),
+                Text(
+                  '${item.calories} ${Strings.cal}',
+                  style: poppinsStyle(
+                    color: AppColor.textAsh,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
                   ),
-                ],
-              ),
-              8.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '\$12',
-                    style: AppStyle.bodyStyle(context)?.copyWith(
-                      color: AppColor.textDark,
-                      fontWeight: FontWeight.w500,
-                    ),
+                ),
+              ],
+            ),
+            8.height,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$12',
+                  style: AppStyle.bodyStyle(context)?.copyWith(
+                    color: AppColor.textDark,
+                    fontWeight: FontWeight.w500,
                   ),
-                  displayButton(),
-                ],
-              ),
-            ],
-          ),
+                ),
+                displayButton(),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -192,12 +195,14 @@ class FoodCard extends StatelessWidget {
           ),
           SizedBox(
             width: 32.w,
-            child: Text(
-              quantity.toString(),
-              style: poppinsStyle(
-                color: AppColor.textDark,
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
+            child: Center(
+              child: Text(
+                quantity.toString(),
+                style: poppinsStyle(
+                  color: AppColor.textDark,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
               ),
             ),
           ),

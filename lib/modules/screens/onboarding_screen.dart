@@ -20,20 +20,22 @@ class OnboardingScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    initData() async {
+    /* initData() async {
       await ref.read(foodUploaderProvider.notifier).uploadData(context);
 
       final isSuccess =
           ref.read(foodUploaderProvider.select((value) => value.isSuccess));
 
       if (isSuccess) {
-        await ref.read(foodProvider.notifier).getAllFoods();
+         await ref.read(foodProvider.notifier).getAllFoods();
       }
-    }
+    }*/
 
     useEffect(() {
       Future.microtask(() {
-        return initData();
+        ref.read(foodProvider.notifier).getData(context);
+
+        //return initData();
       });
 
       return null;

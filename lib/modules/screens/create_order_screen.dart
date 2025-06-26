@@ -1,6 +1,6 @@
 import 'package:balanced_meal/common/card_section.dart';
 import 'package:balanced_meal/common/custom_scaffold.dart';
-import 'package:balanced_meal/common/title_value_box.dart';
+import 'package:balanced_meal/common/calories_price_box.dart';
 import 'package:balanced_meal/common/wide_button.dart';
 import 'package:balanced_meal/core/helper/navigation.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
@@ -8,8 +8,11 @@ import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/models/category.dart';
+import 'package:balanced_meal/data/models/food_category.dart';
 import 'package:balanced_meal/data/models/item.dart';
 import 'package:balanced_meal/modules/providers/food_provider.dart';
+import 'package:balanced_meal/modules/providers/info_provider.dart';
+import 'package:balanced_meal/modules/providers/order_provider.dart';
 import 'package:balanced_meal/modules/screens/order_summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,11 +34,11 @@ class CreateOrderScreen extends StatelessWidget {
                 children: [
                   30.height,
                   VegetablesBox(),
-                  24.height,
+                  4.height,
                   MeatBox(),
-                  24.height,
+                  4.height,
                   CarbsBox(),
-                  29.height,
+                  9.height,
                 ],
               ),
             ),
@@ -55,20 +58,28 @@ class VegetablesBox extends ConsumerWidget {
     return FoodCardSection(
       title: Strings.vegetables,
       items: ref.watch(
-        foodProvider.select(
-          (value) =>
-              value.data
-                  ?.firstWhere(
-                      (category) => category.id == Category.vegetables.name)
-                  .items ??
-              [],
-        ),
+        foodProvider.select((value) {
+          if (value.data == null) {
+            return [];
+          }
+          final categories = value.data!; // Now we know it's not null
+
+          FoodCategory? foodCategory;
+
+          for (final category in categories) {
+            if (category.id == Category.vegetables.name) {
+              foodCategory = category;
+              break;
+            }
+          }
+          return foodCategory?.items ?? [];
+        }),
       ),
       onItemRemovePress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).removeOrder(newItem);
       },
       onItemAddPress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).addToOrders(newItem);
       },
     );
   }
@@ -82,19 +93,28 @@ class MeatBox extends ConsumerWidget {
     return FoodCardSection(
       title: Strings.meat,
       items: ref.watch(
-        foodProvider.select(
-          (value) =>
-              value.data
-                  ?.firstWhere((category) => category.id == Category.meats.name)
-                  .items ??
-              [],
-        ),
+        foodProvider.select((value) {
+          if (value.data == null) {
+            return [];
+          }
+          final categories = value.data!; // Now we know it's not null
+
+          FoodCategory? foodCategory;
+
+          for (final category in categories) {
+            if (category.id == Category.meats.name) {
+              foodCategory = category;
+              break;
+            }
+          }
+          return foodCategory?.items ?? [];
+        }),
       ),
       onItemRemovePress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).removeOrder(newItem);
       },
       onItemAddPress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).addToOrders(newItem);
       },
     );
   }
@@ -108,29 +128,48 @@ class CarbsBox extends ConsumerWidget {
     return FoodCardSection(
       title: Strings.carbs,
       items: ref.watch(
-        foodProvider.select(
-          (value) =>
-              value.data
-                  ?.firstWhere((category) => category.id == Category.carbs.name)
-                  .items ??
-              [],
-        ),
+        foodProvider.select((value) {
+          if (value.data == null) {
+            return [];
+          }
+          final categories = value.data!; // Now we know it's not null
+
+          FoodCategory? foodCategory;
+
+          for (final category in categories) {
+            if (category.id == Category.carbs.name) {
+              foodCategory = category;
+              break;
+            }
+          }
+          return foodCategory?.items ?? [];
+        }),
       ),
       onItemRemovePress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).removeOrder(newItem);
       },
       onItemAddPress: (Item newItem) {
-        ///
+        ref.read(orderProvider.notifier).addToOrders(newItem);
       },
     );
   }
 }
 
-class FooterBox extends StatelessWidget {
+class FooterBox extends ConsumerWidget {
   const FooterBox({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final double userCalories =
+        ref.watch(infoNotifierProvider.select((value) => value.calories));
+
+    final bool isOrderAvailable =
+        ref.watch(orderProvider.select((value) => value.orderItems.isNotEmpty));
+    final bool isOrderWithinRange = ref.watch(orderProvider
+        .select((value) => value.isCaloriesWithinRange(userCalories)));
+
+    final bool isButtonEnabled = isOrderAvailable && isOrderWithinRange;
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       decoration: BoxDecoration(
@@ -146,12 +185,13 @@ class FooterBox extends StatelessWidget {
         children: [
           16.height,
           CaloriesPriceBox(
-            calories: '1000',
-            price: '125',
-          ),
+              /*   calories: '1000',
+            price: '125',*/
+              ),
           10.height,
           WideButton(
             text: Strings.placeOrder,
+            isEnabled: isButtonEnabled,
             onPressed: () {
               Navigation.gotoNamed(context, OrderSummaryScreen.route);
             },

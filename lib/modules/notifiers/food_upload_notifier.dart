@@ -13,6 +13,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class FoodUploadNotifier extends StateNotifier<Response<dynamic>> {
   FoodUploadNotifier() : super(Response.initial());
 
+  void initialize() => state = Response.initial();
+
   Future<void> uploadData(BuildContext context) async {
     state = Response.loading(Strings.uploading);
 
@@ -59,17 +61,17 @@ class FoodUploadNotifier extends StateNotifier<Response<dynamic>> {
       });
 
       //This loop adds all the items to the 'items' sub-collection under the parent collection
-      for (var items in category.items!) {
+      for (var item in category.items!) {
         final itemsPath = foodItemRF(
           foodCategoryId: category.id ?? '',
-          foodId: items.id ?? '',
+          foodId: item.foodName ?? '',
         );
 
         batch.set(itemsPath, {
-          'food_name': items.foodName,
-          'calories': items.calories,
-          'image_url': items.imageUrl,
-          'price': items.price,
+          'food_name': item.foodName,
+          'calories': item.calories,
+          'image_url': item.imageUrl,
+          'price': item.price,
         });
 
         // If the batch has reached the maximum size, submit it to Firestore

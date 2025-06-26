@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -48,6 +39,16 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBY3sd8Y2Eg5OkIJZgP-t4VbRVODxycFow',
+    appId: '1:958676033067:web:4a528d8d648615a9b8546e',
+    messagingSenderId: '958676033067',
+    projectId: 'balanced-meal-57',
+    authDomain: 'balanced-meal-57.firebaseapp.com',
+    storageBucket: 'balanced-meal-57.firebasestorage.app',
+    measurementId: 'G-4H2LMTE8M5',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA9xmf5Qjr3rINCdS4W6OrytY8CqVBL-Dc',
@@ -64,5 +65,24 @@ class DefaultFirebaseOptions {
     projectId: 'balanced-meal-57',
     storageBucket: 'balanced-meal-57.firebasestorage.app',
     iosBundleId: 'com.example.balancedMeal',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDmTaVlYV7P3OQiNt1pNIM4ZkyrjZxmIjU',
+    appId: '1:958676033067:ios:5770efc3315cb6cbb8546e',
+    messagingSenderId: '958676033067',
+    projectId: 'balanced-meal-57',
+    storageBucket: 'balanced-meal-57.firebasestorage.app',
+    iosBundleId: 'com.example.balancedMeal',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBY3sd8Y2Eg5OkIJZgP-t4VbRVODxycFow',
+    appId: '1:958676033067:web:a9d1c41d87e948d3b8546e',
+    messagingSenderId: '958676033067',
+    projectId: 'balanced-meal-57',
+    authDomain: 'balanced-meal-57.firebaseapp.com',
+    storageBucket: 'balanced-meal-57.firebasestorage.app',
+    measurementId: 'G-LJ8LY5PVE1',
   );
 }

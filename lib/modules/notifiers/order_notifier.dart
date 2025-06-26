@@ -15,6 +15,8 @@ class OrderNotifier extends StateNotifier<OrderState> {
 
   OrderRepo orderRepo;
 
+  void initialize() => state = OrderState();
+
   Future<void> addToOrders(Item item) async {
     List<Order> updatedOrderItems = List.from(state.orderItems);
     Order? existingOrder;
@@ -29,6 +31,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
       Order updatedExistingOrder = existingOrder.copyWith(
         totalPrice: (existingOrder.totalPrice ?? 0) + (item.price ?? 0),
         quantity: (existingOrder.quantity ?? 0) + 1,
+        calories: (existingOrder.calories ?? 0) + (item.calories ?? 0),
       );
 
       updatedOrderItems[existingOrderIndex] = updatedExistingOrder;
@@ -37,6 +40,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
         name: item.foodName,
         totalPrice: item.price,
         quantity: 1,
+        calories: item.calories,
       );
 
       //updatedOrderItems.add(newOrder);
@@ -66,6 +70,8 @@ class OrderNotifier extends StateNotifier<OrderState> {
           totalPrice:
               (existingOrder.totalPrice ?? 0.0) - (itemToRemove.price ?? 0),
           quantity: (currentQuantity) - 1,
+          calories:
+              (existingOrder.calories ?? 0) - (itemToRemove.calories ?? 0),
         );
 
         updatedOrderItems[existingOrderIndex] = updatedOrder;
@@ -87,9 +93,12 @@ class OrderNotifier extends StateNotifier<OrderState> {
     try {
       final response = await orderRepo.sendOrders(state.orderItems);
 
+      bool result = response['result'];
+      log('Result: $result');
       // Update the state with new appointments
       state = state.copyWith(
-        response: Response.success(Strings.ordersSent),
+        response:
+            Response.success(Strings.ordersSent, message: 'Result: $result'),
       );
     } catch (e) {
       state = state.copyWith(response: Response.error(e.toString()));

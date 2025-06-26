@@ -1,8 +1,7 @@
-/*
-import 'package:finance_news/core/utils/app_colors.dart';
+import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoadingStack extends StatelessWidget {
@@ -10,13 +9,18 @@ class LoadingStack extends StatelessWidget {
     super.key,
     required this.loadingProvider,
     required this.child,
-    this.color = AppColor.primary600,
-    this.progressIndicator = const CustomLoader(),
+    this.color,
+    this.progressIndicator = const Center(
+      child: CustomLoader(
+        color: AppColor.primary,
+        size: 40,
+      ),
+    ),
     this.opacity = 0.5,
   });
 
   final ProviderListenable<bool> loadingProvider;
-  final Color color;
+  final Color? color;
   final Widget progressIndicator;
   final double opacity;
   final Widget child;
@@ -33,7 +37,7 @@ class LoadingStack extends StatelessWidget {
                 visible: ref.watch(loadingProvider),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: color.withOpacity(opacity),
+                    color: (color ?? AppColor.ash).withValues(alpha: opacity),
                   ),
                   child: progressIndicator,
                 ),
@@ -61,4 +65,3 @@ class CustomLoader extends StatelessWidget {
     );
   }
 }
-*/

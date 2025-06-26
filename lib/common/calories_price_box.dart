@@ -1,21 +1,23 @@
+import 'package:balanced_meal/modules/providers/info_provider.dart';
+import 'package:balanced_meal/modules/providers/order_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:flutter/material.dart';
 
-class CaloriesPriceBox extends StatelessWidget {
+class CaloriesPriceBox extends ConsumerWidget {
   const CaloriesPriceBox({
     super.key,
-    required this.calories,
-    required this.price,
   });
 
-  final String calories;
-  final String price;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final orderState = ref.watch(orderProvider);
+    final double userCalories =
+        ref.watch(infoNotifierProvider.select((value) => value.calories));
+
     return Column(
       children: [
         Row(
@@ -27,7 +29,7 @@ class CaloriesPriceBox extends StatelessWidget {
                   ?.copyWith(color: AppColor.textDark),
             ),
             Text(
-              '$calories ${Strings.calOutOf}',
+              '${orderState.totalCalories.toInt()} ${Strings.calOutOf} ${userCalories.toInt()} ${Strings.cal}',
               style: poppinsStyle(
                 color: AppColor.textAsh,
                 fontSize: 14,
@@ -46,7 +48,7 @@ class CaloriesPriceBox extends StatelessWidget {
                   ?.copyWith(color: AppColor.textDark),
             ),
             Text(
-              '\$ $price',
+              '\$ ${orderState.totalPriceOfAllOrders}',
               style: poppinsStyle(
                 color: AppColor.primary,
                 fontSize: 16,
