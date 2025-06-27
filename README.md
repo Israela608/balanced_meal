@@ -8,6 +8,11 @@ Food Ordering App - Test Project
 
 ## Screenshots
 ![Screenshot_20250627_210412](https://github.com/user-attachments/assets/0241f0f6-2dca-4938-8e74-2cadbe3ccc7c)
+![Screenshot_20250627_210522](https://github.com/user-attachments/assets/274aa47f-d756-4365-8e7c-6009b45c8234)
+![Screenshot_20250627_210622](https://github.com/user-attachments/assets/707e93bd-d133-4f3f-9ec7-36cbd2f250cc)
+![Screenshot_20250627_210649](https://github.com/user-attachments/assets/71c8c8b1-ae33-4ef2-8836-0027c3c86873)
+![Screenshot_20250627_210705](https://github.com/user-attachments/assets/ccc44d40-ddb5-4393-85fa-b1116deff338)
+![Screenshot_20250627_210713](https://github.com/user-attachments/assets/40c4ffce-8713-49a2-a8e8-c824658a23f9)
 
 
 
