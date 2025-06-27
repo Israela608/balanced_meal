@@ -1,5 +1,3 @@
-import 'package:balanced_meal/data/constants/strings.dart';
-import 'package:balanced_meal/data/models/item.dart';
 import 'package:balanced_meal/data/models/order.dart';
 import 'package:balanced_meal/data/models/response.dart';
 import 'package:equatable/equatable.dart';

@@ -6,10 +6,3 @@ final infoNotifierProvider =
     StateNotifierProvider<InfoNotifier, InfoState>((ref) {
   return InfoNotifier();
 });
-
-/*
-final signUpLoadingProvider = Provider<bool>((ref) {
-  final signUpState = ref.watch(signUpNotifierProvider);
-  return signUpState.response.isLoading;
-});
-*/

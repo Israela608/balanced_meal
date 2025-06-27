@@ -4,7 +4,6 @@ import 'package:balanced_meal/common/calories_price_box.dart';
 import 'package:balanced_meal/common/wide_button.dart';
 import 'package:balanced_meal/core/helper/navigation.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
-import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/models/category.dart';
@@ -184,10 +183,7 @@ class FooterBox extends ConsumerWidget {
       child: Column(
         children: [
           16.height,
-          CaloriesPriceBox(
-              /*   calories: '1000',
-            price: '125',*/
-              ),
+          CaloriesPriceBox(),
           10.height,
           WideButton(
             text: Strings.placeOrder,

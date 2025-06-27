@@ -3,7 +3,6 @@ import 'package:balanced_meal/common/drop_down_field.dart';
 import 'package:balanced_meal/common/plain_text_field.dart';
 import 'package:balanced_meal/common/wide_button.dart';
 import 'package:balanced_meal/core/helper/navigation.dart';
-import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/extensions.dart';
 import 'package:balanced_meal/core/utils/validators.dart';
 import 'package:balanced_meal/data/constants/strings.dart';

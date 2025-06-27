@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:balanced_meal/core/utils/app_colors.dart';
 import 'package:balanced_meal/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';

@@ -8,7 +8,6 @@ import 'package:balanced_meal/modules/providers/order_provider.dart';
 import 'package:balanced_meal/modules/screens/onboarding_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:balanced_meal/common/card_section.dart';
 import 'package:balanced_meal/common/custom_scaffold.dart';
 import 'package:balanced_meal/common/calories_price_box.dart';
 import 'package:balanced_meal/common/wide_button.dart';

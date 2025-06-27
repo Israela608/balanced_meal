@@ -6,8 +6,4 @@ class AppConst {
 
   static const String foodCategory = 'category';
   static const String foodItems = 'items';
-
-  static const String dbTableName = 'user_credentials';
-  static const String firstName = 'first_name';
-  static const String lastName = 'last_name';
 }

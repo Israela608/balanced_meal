@@ -1,11 +1,9 @@
-import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:flutter/widgets.dart';
 
 typedef ValidateFunction = String? Function(String? value);
 
 /// A form validator handler class
 class Validators {
-
   /// Validates users input to double
   static String? Function(String?)? validateDouble({
     String? error,
