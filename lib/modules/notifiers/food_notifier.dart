@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:balanced_meal/core/utils/constants.dart';
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/firebase_ref/references.dart';
 import 'package:balanced_meal/data/models/food_category.dart';
+import 'package:balanced_meal/data/models/item.dart';
 import 'package:balanced_meal/data/models/response.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +17,41 @@ class FoodNotifier extends StateNotifier<Response<List<FoodCategory>>> {
 
   void initialize() => state = Response.initial();
 
-  Future<void> getData(BuildContext context) async {
+  Future<void> getAllFoods() async {
+    state = Response.loading(Strings.gettingFoods);
+
+    try {
+      //Get all the data or documents from the questionPapers collection
+      QuerySnapshot<Map<String, dynamic>> data = await foodCategoryRF.get();
+
+      List<FoodCategory> foodCategoryList = [];
+
+      for (final categoryDoc in data.docs) {
+        final categoryId = categoryDoc.id;
+        final categoryTitle = categoryDoc.data()['title'];
+
+        // Get items subcollection
+        final itemsQuery =
+            await categoryDoc.reference.collection(AppConst.foodItems).get();
+
+        final items = itemsQuery.docs
+            .map((itemDoc) => Item.fromSnapshot(itemDoc))
+            .toList();
+
+        foodCategoryList.add(FoodCategory(
+          id: categoryId,
+          title: categoryTitle,
+          items: items,
+        ));
+      }
+
+      state = Response.success(foodCategoryList);
+    } catch (e) {
+      state = Response.error(e.toString());
+    }
+  }
+
+  Future<void> getAllFoodsFromLocalDB(BuildContext context) async {
     final manifestContent =
         await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -38,23 +74,5 @@ class FoodNotifier extends StateNotifier<Response<List<FoodCategory>>> {
     }
 
     state = Response.success(categories);
-  }
-
-  Future<void> getAllFoods() async {
-    state = Response.loading(Strings.gettingFoods);
-
-    try {
-      //Get all the data or documents from the questionPapers collection
-      QuerySnapshot<Map<String, dynamic>> data = await foodCategoryRF.get();
-
-      //We convert the snapshot map to a list of FoodCategory by looping through it
-      final foodCategoryList = data.docs
-          .map((category) => FoodCategory.fromSnapshot(category))
-          .toList();
-
-      state = Response.success(foodCategoryList);
-    } catch (e) {
-      state = Response.error(e.toString());
-    }
   }
 }

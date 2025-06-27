@@ -26,7 +26,7 @@ class FoodCategory extends Equatable {
   //If it's coming from firebase, use fromSnapshot()
   FoodCategory.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
       : id = snapshot.id,
-        title = snapshot['title'],
+        title = snapshot.data()?['title'],
         items = [];
 
   Map<String, dynamic> toJson() {

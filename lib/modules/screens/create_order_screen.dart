@@ -1,6 +1,7 @@
 import 'package:balanced_meal/common/card_section.dart';
 import 'package:balanced_meal/common/custom_scaffold.dart';
 import 'package:balanced_meal/common/calories_price_box.dart';
+import 'package:balanced_meal/common/loading_stack.dart';
 import 'package:balanced_meal/common/wide_button.dart';
 import 'package:balanced_meal/core/helper/navigation.dart';
 import 'package:balanced_meal/core/utils/app_colors.dart';
@@ -23,27 +24,30 @@ class CreateOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      title: Strings.createOrder,
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  30.height,
-                  VegetablesBox(),
-                  4.height,
-                  MeatBox(),
-                  4.height,
-                  CarbsBox(),
-                  9.height,
-                ],
+    return LoadingStack(
+      loadingProvider: foodLoadingProvider,
+      child: CustomScaffold(
+        title: Strings.createOrder,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    30.height,
+                    VegetablesBox(),
+                    4.height,
+                    MeatBox(),
+                    4.height,
+                    CarbsBox(),
+                    9.height,
+                  ],
+                ),
               ),
             ),
-          ),
-          FooterBox(),
-        ],
+            FooterBox(),
+          ],
+        ),
       ),
     );
   }

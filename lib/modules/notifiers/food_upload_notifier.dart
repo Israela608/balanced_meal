@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:balanced_meal/data/constants/strings.dart';
 import 'package:balanced_meal/data/firebase_ref/references.dart';
@@ -36,7 +35,7 @@ class FoodUploadNotifier extends StateNotifier<Response<dynamic>> {
     //Read the contents from the path
     for (var foodCategory in foodsInAssets) {
       String stringFoodCategory = await rootBundle.loadString(foodCategory);
-      log(stringFoodCategory);
+      // log(stringFoodCategory);
 
       //String into a map
       categories.add(FoodCategory.fromJson(json.decode(stringFoodCategory)));

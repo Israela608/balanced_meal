@@ -7,3 +7,7 @@ final foodProvider =
     StateNotifierProvider<FoodNotifier, Response<List<FoodCategory>>>((ref) {
   return FoodNotifier();
 });
+
+final foodLoadingProvider = Provider<bool>((ref) {
+  return ref.watch(foodProvider.select((value) => value.isLoading));
+});
