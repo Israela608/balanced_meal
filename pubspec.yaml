@@ -16,7 +16,6 @@ dependencies:
   hooks_riverpod: ^2.6.1
   page_transition: ^2.2.1
   flutter_hooks: ^0.21.2
-  url_launcher: ^6.3.1
   equatable: ^2.0.7
   flutter_svg: ^2.2.0
   flutter_keyboard_visibility: ^6.0.0
